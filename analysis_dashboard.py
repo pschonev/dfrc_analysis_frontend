@@ -22,12 +22,13 @@ def _():
     import polars as pl
 
     FEN_TEMPLATE = "https://lichess.org/analysis/{black}/pppppppp/8/8/8/8/PPPPPPPP/{white}_w_KQkq_-_0_1?color=white"
-    return FEN_TEMPLATE, mo, pl
+    data_path = mo.notebook_location() / "analysis_data" / "data" / "analysis_results.parquet"
+    return FEN_TEMPLATE, data_path, mo, pl
 
 
 @app.cell
-def _(mo, pl):
-    df = pl.read_parquet("analysis_data/data/analysis_results.parquet")
+def _(data_path, mo, pl):
+    df = pl.read_parquet(data_path)
     table = mo.ui.table(df, selection="single")
     table
     return df, table
@@ -50,7 +51,9 @@ def _(dfrc_id, fen, mo):
 
 @app.cell
 def _(fen, mo):
-    mo.Html(f'<iframe src="{fen}" style="width: 400px; aspect-ratio: 10/11;" allowtransparency="true" frameborder="0"></iframe>')
+    mo.Html(
+        f'<iframe src="{fen}" style="width: 400px; aspect-ratio: 10/11;" allowtransparency="true" frameborder="0"></iframe>'
+    )
     return
 
 
