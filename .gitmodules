@@ -1,0 +1,3 @@
+[submodule "analysis_data"]
+	path = analysis_data
+	url = https://github.com/pschonev/double-fischer-random
